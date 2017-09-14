@@ -1,101 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Web Shop</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.css" />
-  <style type="text/css">
-    body {
-      background-color: #FFFFFF;
-    }
-    .main.container {
-      margin-top: 7em;
-    }
-    .ui.footer.segment {
-      margin: 5em 0em 0em;
-      padding: 5em 0em;
-    }
-  </style>
+    <style type="text/css">
+      body {
+        background-color: #FFFFFF;
+      }
+      .main.container {
+        margin-top: 7em;
+      }
+      .ui.footer.segment {
+        margin: 5em 0em 0em;
+        padding: 5em 0em;
+      }
+    </style>
 </head>
 <body>
-  <div class="ui fixed inverted menu">
-    <div class="ui container">
-      <a href="#" class="header item">
-        <i class="shopping bag icon"></i>
-        Vue shop
-      </a>
-      <div class="right item">
-        <i class="cart icon"></i>
-        <a href="#">Panier</a>
-        <div class="horizontal ui teal label">22</div>
+  <div id="main">
+    <div class="ui fixed inverted menu">
+      <div class="ui container">
+        <a href="#" class="header item">
+          <i class="shopping bag icon"></i>
+          Vue shop
+        </a>
+        <div class="right item">
+          <i class="cart icon"></i>
+          <a href="#">Panier</a>
+          <div class="horizontal ui teal label">{{cartCount}}</div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="ui main text container">
-    <h1 class="ui header">Products</h1>
-
-    <div class="ui divided items">
-
-      <div class="item">
-        <div class="image">
-          <img src="/assets/vaporisateur_eau_de_parfum.jpg">
-        </div>
-        <div class="middle aligned content">
-          <a class="header">Eau de parfum</a>
-          <div class="meta">
-            <span>20€</span>
-          </div>
-          <div class="extra">
-            <div class="ui right floated primary button">
-              Ajouter
-              <i class="right chevron icon"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="image">
-          <a class="floating ui red ribbon label">New!</a>
-          <img src="/assets/rouge_a_levres.jpg">
-        </div>
-        <div class="middle aligned content">
-          <a class="header">Rouge à lèvre</a>
-          <div class="meta">
-            <span>30€</span>
-          </div>
-          <div class="extra">
-            <div class="ui right floated primary button">
-              Ajouter
-              <i class="right chevron icon"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="item">
-        <div class="image">
-          <img src="/assets/amande_concentre_de_lait.jpg">
-        </div>
-        <div class="middle aligned content">
-          <a class="header">Lait d'amande</a>
-          <div class="meta">
-            <span>10€</span>
-          </div>
-          <div class="extra">
-            <div class="ui right floated primary button">
-              Ajouter
-              <i class="right chevron icon"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <div class="ui main text container">
+      <products></products>
     </div>
-  </div>
 
-  <div class="ui inverted vertical footer segment">
+    <div class="ui inverted vertical footer segment">
 
       <div class="ui horizontal inverted small divided link list">
         <i class="shopping bag icon"></i>
@@ -104,10 +46,41 @@
         <a class="item" href="#">Terms and Conditions</a>
         <a class="item" href="#">Privacy Policy</a>
       </div>
+    </div>
   </div>
+
+  <template id="products">
+    <div>
+      <h1 class="ui header">Products</h1>
+      <div class="ui divided items" >
+        <product v-for="product in products" :product="product" :key="product.id"></product>
+      </div>
+    </div>
+  </template>
+
+  <template id="product">
+    <div class="item">
+      <div class="image">
+        <img :src="product.img">
+      </div>
+      <div class="middle aligned content">
+        <a class="header">{{product.name}}</a>
+        <div class="meta">
+          <span>{{product.price}}</span>
+        </div>
+        <div class="extra">
+          <div class="ui right floated primary button" v-on:click="addToCart">
+            Ajouter
+            <i class="right chevron icon"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.4/vue.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.4/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.3.4/vue-resource.js"></script>
   <script src="index.js"></script>
 </body>
 </html>
